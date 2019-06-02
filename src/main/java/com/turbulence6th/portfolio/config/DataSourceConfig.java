@@ -6,25 +6,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 @Configuration
 public class DataSourceConfig {
 
-    @Value("${DATABASE_URL:jdbc:postgresql://localhost:5432/postgres}")
+    @Value("${DATABASE_URL:postgresql://postgres:postgres@localhost:5432/postgres}")
     private String databaseUrl;
 
-    @Value("${DATABASE_USER:postgres}")
-    private String username;
-
-    @Value("${DATABASE_PASSWORD:postgres}")
-    private String password;
-
     @Bean
-    public DataSource getDataSource() {
+    public DataSource getDataSource() throws URISyntaxException {
+        URI dbUri = new URI(databaseUrl);
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String jdbcDbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url(databaseUrl);
+        dataSourceBuilder.url(jdbcDbUrl);
         dataSourceBuilder.username(username);
         dataSourceBuilder.password(password);
         return dataSourceBuilder.build();
