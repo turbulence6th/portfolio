@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugins>
-  <plugin id="com.turbulence6th.black-template" url="http://turbulence6th.com/black-template-1.0-SNAPSHOT.zip" version="1.0.0">
+  <plugin id="com.turbulence6th.black-template" url="http://turbulence6th.com/black-template-1.0-SNAPSHOT.zip" version="1.0.1">
     <idea-version since-build="191.*" until-build="193.*" />
 	<name>Black Template</name>
   </plugin>
