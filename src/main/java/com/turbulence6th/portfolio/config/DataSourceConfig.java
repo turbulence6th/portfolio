@@ -24,7 +24,7 @@ public class DataSourceConfig {
         String password = dbUri.getUserInfo().split(":")[1];
         String jdbcDbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
 
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
         dataSourceBuilder.url(jdbcDbUrl);
         dataSourceBuilder.username(username);
